@@ -1,0 +1,29 @@
+
+
+
+
+
+Die Umwandlung von TRUE zu “ TRUE” ist kein Bug. 
+
+Implizit wird die Funktion as.matrix.data.frame aufgerufen und dabei mit der Funktion ‘format' formatiert. Dort in der Hilfe steht: 'Character strings are padded with blanks to the display width of the widest.'
+Und “FALSE” hat ein Buchstaben mehr als “TRUE”, daher kommt das “ TRUE"
+
+Mehr dazu hier: 
+
+http://stackoverflow.com/questions/15618527/why-does-as-matrix-add-extra-spaces-when-converting-numeric-to-character
+
+
+
+
+any(na.omit(NA))
+[1] FALSE
+all(na.omit(NA))
+[1] TRUE
+
+
+any(na.omit(NA)) ist ja das gleiche wie any() ohne Argument und es macht Sinn, dass das FALSE ergibt. 
+
+Zu all() steht in der Hilfe: 
+That all(logical(0)) is true is a useful convention: it ensures that
+
+all(all(x), all(y)) == all(x, y)
