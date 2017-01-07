@@ -1,9 +1,7 @@
+# Loading pacakges with non-standard evaluation. also completion of arguments in code
 
 
-
-
-
-Die Umwandlung von TRUE zu “ TRUE” ist kein Bug. 
+# Die Umwandlung von TRUE zu “ TRUE” ist kein Bug. 
 
 Implizit wird die Funktion as.matrix.data.frame aufgerufen und dabei mit der Funktion ‘format' formatiert. Dort in der Hilfe steht: 'Character strings are padded with blanks to the display width of the widest.'
 Und “FALSE” hat ein Buchstaben mehr als “TRUE”, daher kommt das “ TRUE"
@@ -15,7 +13,7 @@ http://stackoverflow.com/questions/15618527/why-does-as-matrix-add-extra-spaces-
 
 
 
-any(na.omit(NA))
+# any(na.omit(NA))
 [1] FALSE
 all(na.omit(NA))
 [1] TRUE
@@ -27,3 +25,38 @@ Zu all() steht in der Hilfe:
 That all(logical(0)) is true is a useful convention: it ensures that
 
 all(all(x), all(y)) == all(x, y)
+
+
+# Add some tipps. One tip: Do NOT overwrite base R functions. I literally spend ours
+  finding a bug that and the solution was that another programmer overwrote the 'sample'
+  function. Btw. it was a project about sampling
+
+
+
+# Do not use attach
+
+
+# library('xxx') spams the workspace with lots of stuff. 
+
+
+# Difference between require() and library()
+
+# https://rforcats.net/#nonos
+
+
+#
+  http://www.computerworld.com/article/2497319/business-intelligence-beginner-s-guide-to-r-syntax-quirks-you-ll-want-to-know.html
+
+# https://www.r-bloggers.com/7-r-quirks-that-will-drive-you-nutty/
+
+# http://blog.revolutionanalytics.com/2015/06/why-has-r-been-so-successful.html
+
+
+# Beispiel von Heidi mit Maschinen Zahlen
+
+# https://twitter.com/hadleywickham/status/817009928024051712
+
+# http://adv-r.had.co.nz/Computing-on-the-language.html
+
+
+# https://cran.r-project.org/doc/FAQ/R-FAQ.html

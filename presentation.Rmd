@@ -1,0 +1,85 @@
+---
+title: "R, y u do dis?"
+author: Christoph Molnar
+date: February 6, 2017
+output: ryudodis_presentation
+---
+
+# Title slide
+
+## For who is R the first programming language? Who started with something else?
+# Some daily issues
+
+## Machine numbers
+
+## Non standard evaluation
+
+## Implicit type conversions
+example with matrix TRUE/FALSE
+also problems with dply tbl, have to cast to data.frame
+
+## NA behaviour
+
+
+## Behaviour in special cases
+all() and any()
+
+## I loaded to packages, one overwrites a function of the other
+Example part 1: 
+```{r}
+library('dplyr')
+dat = read.csv('iris.csv')
+dat %>% mutate(x_sqrt=sqrt(x)) %>% select()
+```
+
+ADD MEME
+
+Example part 2:
+```{r}
+library('dplyr')
+library('data.table')
+
+dat = fread('table.csv')
+dat %>% mutate(x_sqrt=sqrt(x)) %>% select()
+```
+
+ADD MEME
+
+Gives Error
+What happened?
+
+## How to find the source code of a function
+Often you want to know what is happening under the hood. Maybe you want to make a little adaption to the function. 
+How can you find the code?
+Often: Type the function in terminal
+When package not loaded: 
+Hidden function: Type :::
+S3: method
+S4: @
+For C or Fortran functions: 
+
+## NA behaviour for all(), any(), mean(), median(), ...
+
+
+# Summary
+
+## The good things about R
+
+- Written by statisticians for statisticians (DSL?)
+- Dynamic typing 
+- S3 classes
+- Non standard evaluation
+- Language for creating DSLs (dplyr, ggplot, data.table, ...)
+- package system 
+
+## The bad things about R
+
+Same as good things. 
+
+## Tipps
+
+- Do not overwrite base functions
+- Do library('ggplot'), don't library(ggplot)
+- 
+
+
