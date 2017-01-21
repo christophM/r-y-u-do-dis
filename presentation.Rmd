@@ -2,64 +2,172 @@
 title: "R, y u do dis?"
 author: Christoph Molnar
 date: February 6, 2017
-output: ryudodis_presentation
+output: ioslides_presentation
 ---
 
-# Title slide
+## R can be rewardingly easy to use
+<img src="./img/ez.gif" width="600px" />
 
-## For who is R the first programming language? Who started with something else?
-# Some daily issues
+## R can be also a source of frustration
+<img src="./img/code-not-working.gif" width="800px" />
 
-## Machine numbers
 
-## Non standard evaluation
+## Let's do some --easy-- calculations
+```{r results='hide'}
+(1.1 - 0.2) == 0.9
+```
+## Let's do some --easy-- calculations
+```{r }
+(1.1 - 0.2) == 0.9
+```
+## Let's do some --easy-- calculations 
+```{r }
+(1.1 - 0.2) == 0.9
+```
+```{r}
+1.1 - 0.2
+```
+## Let's do some --easy-- calculations 
+<img src="./img/wat.jpg" width="800px" />
+
+## Y u no 0.9!?
+```{r}
+print(1.1 - 0.2, digits = 22)
+```
+Reason: Machine representation of float (numbers with decimal points)
 
 ## Implicit type conversions
+```{r}
+df1 <- data.frame(x1=c(TRUE, NA, FALSE), x2=c(10,1,NA), x3=c('a', NA, 'c'))
+lapply(df1, class)
+df2 <- data.frame(x1=c(TRUE, TRUE, FALSE), x2=c(1,1,1), x3=c('a', 'a', 'a'))
+
+
+df1[is.na(df1)] <- df2[is.na(df1)]
+lapply(df1, class)
+
+```
 example with matrix TRUE/FALSE
 also problems with dply tbl, have to cast to data.frame
 
 ## NA behaviour
 
+## Let's talk about any() and all()
+```{r}
+any(c(FALSE, FALSE))
+any(c(TRUE, FALSE))
+all(c(TRUE, FALSE))
+all(c(TRUE, TRUE))
+```
+## Let's talk about any() and all()
+```{r}
+any(c(FALSE, FALSE, NA))
+any(c(TRUE, FALSE, NA))
+all(c(TRUE, FALSE, NA))
+all(c(TRUE, TRUE, NA))
+```
+## Let's talk about any() and all()
+```{r, results='hide'}
+any(c())
+all(c())
+```
+## Let's talk about any() and all()
+```{r, results='hide'}
+any(c())
+all(c())
+```
+## Let's talk about any() and all()
+```{r}
+any(c())
+all(c())
+```
+## Let's talk about any() and all()
+This seems kind of arbitrary. 
+TODO: Image
 
-## Behaviour in special cases
-all() and any()
+## Let's talk about any() and all()
+Solution in the help file: 
+<img src="./img/all.png" width="800px" />
+
 
 ## I loaded to packages, one overwrites a function of the other
-Example part 1: 
-```{r}
+```{r message=FALSE}
 library('dplyr')
 dat = read.csv('iris.csv')
-dat %>% mutate(x_sqrt=sqrt(x)) %>% select()
+dat_reduced = dat %>% 
+  mutate(Sepal.Length.squared=sqrt(Sepal.Length)) %>% 
+  select(Sepal.Length.squared, Species)
+
+head(dat_reduced)
 ```
 
-ADD MEME
-
-Example part 2:
-```{r}
+## part 2: I loaded to packages, one overwrites a function of the other
+```{r message=FALSE}
 library('dplyr')
 library('data.table')
-
-dat = fread('table.csv')
-dat %>% mutate(x_sqrt=sqrt(x)) %>% select()
+dat = fread('iris.csv')
+dat_reduced = dat %>% 
+  mutate(Sepal.Length.squared=sqrt(Sepal.Length)) %>% 
+  select(Sepal.Length.squared, Species)
 ```
 
-ADD MEME
+## Why is it not working
+![thinking](./img/homer-manual.gif)
 
-Gives Error
-What happened?
 
-## How to find the source code of a function
+## Working with factors in R
+```{r}
+dat <- data.frame(measure = c('6','1', '1', '1', '2','10','4'))
+dat$measure
+as.numeric(dat$measure)
+```
+## Working with factors in R
+<img src="./img/unexpected.gif" width="800px" />
+Unexpected results!
+
+## Working with factors in R
+```{r}
+str(dat$measure)
+```
+## Working with factors in R
+Implicit coercions can be really hard to spot!
+```{r}
+c(dat$measure, c(22, 1))
+```
+Tips: 
+
+* Only use factors when really needed
+* Carefully check types
+* Use option 'stringsAsFactors=FALSE' in read.csv and data.frame
+
+
+## Working with factors in R
+<img src="./img/factor.png" width="800px" />
+
+## View functions code
+TODO: Find simple and short function  to show
+
 Often you want to know what is happening under the hood. Maybe you want to make a little adaption to the function. 
 How can you find the code?
 Often: Type the function in terminal
-When package not loaded: 
+## Easy
+TODO: Insert gif of thumbs up computer kid
+
+## But wait
+Does not work in a lot of cases. 
+You have to know at least 5 more methods for seing the code of functions.
+
+## Wat
+TODO: Insert WAT meme
+
+## View functions code (advanced)
+When package not loaded: Type ::
 Hidden function: Type :::
-S3: method
+S3: methods(x) mean.length
 S4: @
-For C or Fortran functions: 
+For C or Fortran functions:  Good luck
 
 ## NA behaviour for all(), any(), mean(), median(), ...
-
 
 # Summary
 

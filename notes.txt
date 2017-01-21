@@ -60,3 +60,17 @@ all(all(x), all(y)) == all(x, y)
 
 
 # https://cran.r-project.org/doc/FAQ/R-FAQ.html
+
+
+Beispiele:
+- Factor with numeric labels  as numeric
+- any(c())
+- logical in df to matrix and then logical conversion does not work
+- seq(0.1, 1.1, by=0.1) == 1 is all FALSE
+
+Ganz viele Memes einbauen
+
+
+http://digitheadslabnotebook.blogspot.ch/2011/06/environments-in-r.html?m=1
+
+https://ironholds.org/projects/rbitrary/
