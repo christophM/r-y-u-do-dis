@@ -38,19 +38,20 @@ Reason: Machine representation of float (numbers with decimal points)
 
 ## Implicit type conversions
 ```{r}
-df1 <- data.frame(x1=c(TRUE, NA, FALSE), x2=c(10,1,NA), x3=c('a', NA, 'c'))
-lapply(df1, class)
-df2 <- data.frame(x1=c(TRUE, TRUE, FALSE), x2=c(1,1,1), x3=c('a', 'a', 'a'))
+df1 <- data.frame(x1=c(TRUE, NA, FALSE), 
+                  x2=c(10,1,NA), 
+                  x3=c('a', NA, 'c'))
+sapply(df1, class)
+df2 <- data.frame(x1=c(TRUE, TRUE, FALSE),
+                  x2=c(1,1,1), 
+                  x3=c('a', 'a', 'a'))
 
 
 df1[is.na(df1)] <- df2[is.na(df1)]
-lapply(df1, class)
+sapply(df1, class)
 
 ```
-example with matrix TRUE/FALSE
-also problems with dply tbl, have to cast to data.frame
-
-## NA behaviour
+TODO: finish example with matrix TRUE/FALSE
 
 ## Let's talk about any() and all()
 ```{r}
@@ -60,6 +61,7 @@ all(c(TRUE, FALSE))
 all(c(TRUE, TRUE))
 ```
 ## Let's talk about any() and all()
+
 ```{r}
 any(c(FALSE, FALSE, NA))
 any(c(TRUE, FALSE, NA))
@@ -83,7 +85,7 @@ all(c())
 ```
 ## Let's talk about any() and all()
 This seems kind of arbitrary. 
-TODO: Image
+TODO: Arbitrary Image/meme
 
 ## Let's talk about any() and all()
 Solution in the help file: 
@@ -112,7 +114,7 @@ dat_reduced = dat %>%
 ```
 
 ## Why is it not working
-![thinking](./img/homer-manual.gif)
+![](./img/homer-manual.gif)
 
 
 ## Working with factors in R
@@ -121,18 +123,22 @@ dat <- data.frame(measure = c('6','1', '1', '1', '2','10','4'))
 dat$measure
 as.numeric(dat$measure)
 ```
-## Working with factors in R
-<img src="./img/unexpected.gif" width="800px" />
-Unexpected results!
 
 ## Working with factors in R
 ```{r}
 str(dat$measure)
 ```
-## Working with factors in R
-Implicit coercions can be really hard to spot!
+
+## R is full of (implicit) conversion
+<img src="./img/unexpected.gif" width="800px" />
+Unexpected results!
+
+
+## Implicit coercions can be really hard to spot!
 ```{r}
-c(dat$measure, c(22, 1))
+str(dat$measure)
+x = c(dat$measure, c(22, 1))
+str(x)
 ```
 Tips: 
 
@@ -144,23 +150,42 @@ Tips:
 ## Working with factors in R
 <img src="./img/factor.png" width="800px" />
 
-## View functions code
-TODO: Find simple and short function  to show
+## What's happening inside of this function?
+R is open source => You can look inside of functions!
+Nice if you want to use code and adapt it, or just understand what's happening. 
+Always possible to see the source code. 
+TODO: Check how to get the source code outside of terminal
 
-Often you want to know what is happening under the hood. Maybe you want to make a little adaption to the function. 
-How can you find the code?
-Often: Type the function in terminal
+## But lazyness rests deep inside
+TODO: Add meme for lazyness
+Too lazy to leave the R console. 
+
+## What's happening inside of this function?
+It is simple: Just type the functions name into the R console
+```{r}
+rownames
+```
+
 ## Easy
 TODO: Insert gif of thumbs up computer kid
 
 ## But wait
 Does not work in a lot of cases. 
 You have to know at least 5 more methods for seing the code of functions.
-
+```{r}
+mean
+any
+lapply
+```
+TODO: Check S4 methods
+TODO: What is Primitive vs INternal 
 ## Wat
 TODO: Insert WAT meme
 
 ## View functions code (advanced)
+```{r}
+mean.default
+```
 When package not loaded: Type ::
 Hidden function: Type :::
 S3: methods(x) mean.length
@@ -169,25 +194,29 @@ For C or Fortran functions:  Good luck
 
 ## NA behaviour for all(), any(), mean(), median(), ...
 
-# Summary
 
-## The good things about R
+## require vs library 
 
-- Written by statisticians for statisticians (DSL?)
-- Dynamic typing 
-- S3 classes
-- Non standard evaluation
-- Language for creating DSLs (dplyr, ggplot, data.table, ...)
-- package system 
+## <- vs = 
+  
+## Don't u dare use <<-
+Never, ever use <<-
 
-## The bad things about R
+TODO: Add meme with Eva apple or gift from devil 
 
-Same as good things. 
-
-## Tipps
-
-- Do not overwrite base functions
-- Do library('ggplot'), don't library(ggplot)
-- 
+## library('ggplot') vs library(ggplot)
 
 
+
+## Some advice
+- R help is helpful, use it!
+- Nice FAQ!
+
+Meta facts about the talk:
+
+- Slides are down with knitr+RMarkdown+ioslides
+- Time spent: 
+  - 20% on content and practicing
+  - 80% on choosing the memes
+
+# Thanks for listening!
