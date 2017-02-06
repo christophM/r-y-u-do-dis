@@ -3,6 +3,7 @@ title: "R, y u do dis?"
 author: Christoph Molnar
 date: February 6, 2017
 output: ioslides_presentation
+widescreen: false
 ---
 
 ## R can be rewardingly easy to use
@@ -11,116 +12,62 @@ output: ioslides_presentation
 ## R can be also a source of frustration
 <img src="./img/code-not-working.gif" width="800px" />
 
+## Let's do some simple calculations 
+```{r, results='hide'}
+options(digits=22)
 
-## Let's do some --easy-- calculations
-```{r results='hide'}
-(1.1 - 0.2) == 0.9
-```
-## Let's do some --easy-- calculations
-```{r }
-(1.1 - 0.2) == 0.9
-```
-## Let's do some --easy-- calculations 
-```{r }
-(1.1 - 0.2) == 0.9
-```
-```{r}
 1.1 - 0.2
 ```
-## Let's do some --easy-- calculations 
+
+## Let's do some simple calculations 
+```{r}
+options(digits=22)
+
+1.1 - 0.2
+```
+
+## Let's do some simple calculations 
 <img src="./img/wat.jpg" width="800px" />
 
-## Y u no 0.9!?
+## Let's do some simple calculations 
 ```{r}
-print(1.1 - 0.2, digits = 22)
+options(digits=22)
+
+1.1 - 0.2
 ```
 Reason: Machine representation of float (numbers with decimal points)
 
-## Implicit type conversions
-```{r}
-df1 <- data.frame(x1=c(TRUE, NA, FALSE), 
-                  x2=c(10,1,NA), 
-                  x3=c('a', NA, 'c'))
-sapply(df1, class)
-df2 <- data.frame(x1=c(TRUE, TRUE, FALSE),
-                  x2=c(1,1,1), 
-                  x3=c('a', 'a', 'a'))
+## Usually differences are negligibly small
+<img src="./img/small.jpg" width="800px" />
 
 
-df1[is.na(df1)] <- df2[is.na(df1)]
-sapply(df1, class)
-
-```
-TODO: finish example with matrix TRUE/FALSE
-
-## Let's talk about any() and all()
-```{r}
-any(c(FALSE, FALSE))
-any(c(TRUE, FALSE))
-all(c(TRUE, FALSE))
-all(c(TRUE, TRUE))
-```
-## Let's talk about any() and all()
-
-```{r}
-any(c(FALSE, FALSE, NA))
-any(c(TRUE, FALSE, NA))
-all(c(TRUE, FALSE, NA))
-all(c(TRUE, TRUE, NA))
-```
 ## Let's talk about any() and all()
 ```{r, results='hide'}
-any(c())
 all(c())
-```
-## Let's talk about any() and all()
-```{r, results='hide'}
 any(c())
-all(c())
 ```
+
 ## Let's talk about any() and all()
 ```{r}
 any(c())
+```
+
+## Let's talk about any() and all()
+```{r}
 all(c())
 ```
-## Let's talk about any() and all()
-This seems kind of arbitrary. 
-TODO: Arbitrary Image/meme
+<img src="./img/arbitrary.jpg" width="500px" />
 
 ## Let's talk about any() and all()
 Solution in the help file: 
 <img src="./img/all.png" width="800px" />
 
-
-## I loaded to packages, one overwrites a function of the other
-```{r message=FALSE}
-library('dplyr')
-dat = read.csv('iris.csv')
-dat_reduced = dat %>% 
-  mutate(Sepal.Length.squared=sqrt(Sepal.Length)) %>% 
-  select(Sepal.Length.squared, Species)
-
-head(dat_reduced)
-```
-
-## part 2: I loaded to packages, one overwrites a function of the other
-```{r message=FALSE}
-library('dplyr')
-library('data.table')
-dat = fread('iris.csv')
-dat_reduced = dat %>% 
-  mutate(Sepal.Length.squared=sqrt(Sepal.Length)) %>% 
-  select(Sepal.Length.squared, Species)
-```
-
-## Why is it not working
-![](./img/homer-manual.gif)
-
+## Factors are super useful!
+<img src="./img/gadget.jpg" width="800px" />
 
 ## Working with factors in R
 ```{r}
 dat <- data.frame(measure = c('6','1', '1', '1', '2','10','4'))
-dat$measure
 as.numeric(dat$measure)
 ```
 
@@ -129,94 +76,84 @@ as.numeric(dat$measure)
 str(dat$measure)
 ```
 
-## R is full of (implicit) conversion
+
+## R is full of (implicit) coercion
 <img src="./img/unexpected.gif" width="800px" />
-Unexpected results!
 
-
-## Implicit coercions can be really hard to spot!
+## Implicit coercions is implicit!
 ```{r}
-str(dat$measure)
-x = c(dat$measure, c(22, 1))
-str(x)
+dat$measure
+c(dat$measure, c(22, 1))
 ```
-Tips: 
-
-* Only use factors when really needed
-* Carefully check types
-* Use option 'stringsAsFactors=FALSE' in read.csv and data.frame
 
 
 ## Working with factors in R
 <img src="./img/factor.png" width="800px" />
 
-## What's happening inside of this function?
-R is open source => You can look inside of functions!
-Nice if you want to use code and adapt it, or just understand what's happening. 
-Always possible to see the source code. 
-TODO: Check how to get the source code outside of terminal
 
-## But lazyness rests deep inside
-TODO: Add meme for lazyness
-Too lazy to leave the R console. 
-
-## What's happening inside of this function?
-It is simple: Just type the functions name into the R console
-```{r}
-rownames
+## require('bananas') vs library('bananas')
+```{r, eval=FALSE}
+require('bananas')
+library('bananas')
 ```
 
-## Easy
-TODO: Insert gif of thumbs up computer kid
-
-## But wait
-Does not work in a lot of cases. 
-You have to know at least 5 more methods for seing the code of functions.
-```{r}
-mean
-any
-lapply
+## require('bananas') vs library('bananas')
+```{r, error=TRUE}
+require('bananas')
+library('banana')
 ```
-TODO: Check S4 methods
-TODO: What is Primitive vs INternal 
-## Wat
-TODO: Insert WAT meme
+=> Use library in most cases
 
-## View functions code (advanced)
-```{r}
-mean.default
+## require('bananas') vs library('bananas')
+```{r, warning=FALSE, message=FALSE}
+x <- require('bananas')
+x
 ```
-When package not loaded: Type ::
-Hidden function: Type :::
-S3: methods(x) mean.length
-S4: @
-For C or Fortran functions:  Good luck
 
-## NA behaviour for all(), any(), mean(), median(), ...
+```{r, eval=FALSE}
+if(!x){
+  install.packages('banana')
+}
+```
 
+## require('bananas') vs library('bananas')
+<img src="./img/banana.jpg" width="400px" />
 
-## require vs library 
 
 ## <- vs = 
-  
-## Don't u dare use <<-
-Never, ever use <<-
-
-TODO: Add meme with Eva apple or gift from devil 
-
-## library('ggplot') vs library(ggplot)
+```{r}
+x <- 1
+x = 1
+```
+What's the difference?
 
 
+## <- vs = 
+In practice same functionality. 
+
+```{r}
+mean(new_var <- c(1,2))
+new_var
+```
+## What about <<- ?
+```{r}
+var = 1
+fun = function(x){var <<- x}
+fun(2)
+var
+```
+<img src="./img/fire.gif" width="300px" />
 
 ## Some advice
 - R help is helpful, use it!
 - Nice FAQ!
 
-Meta facts about the talk:
+## Meta facts about the talk:
 
-- Slides are down with knitr+RMarkdown+ioslides
+- Slides down with knitr+RMarkdown+ioslides
+- Slides on Github: https://github.com/christophM/r-y-u-do-dis
 - Time spent: 
-  - 20% on content and practicing
-  - 80% on choosing the memes
+    - 20% on content and practicing
+    - 80% on choosing the memes
 
-# Thanks for listening!
+# Thanks!

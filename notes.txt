@@ -12,7 +12,22 @@ http://stackoverflow.com/questions/15618527/why-does-as-matrix-add-extra-spaces-
 
 
 
+## Implicit type conversions
+```{r}
+df1 <- data.frame(x1=c(TRUE, NA, FALSE), 
+                  x2=c(10,1,NA), 
+                  x3=c('a', NA, 'c'))
+sapply(df1, class)
+df2 <- data.frame(x1=c(TRUE, TRUE, FALSE),
+                  x2=c(1,1,1), 
+                  x3=c('a', 'a', 'a'))
 
+
+df1[is.na(df1)] <- df2[is.na(df1)]
+sapply(df1, class)
+
+```
+TODO: finish example with matrix TRUE/FALSE
 # any(na.omit(NA))
 [1] FALSE
 all(na.omit(NA))
@@ -74,3 +89,70 @@ Ganz viele Memes einbauen
 http://digitheadslabnotebook.blogspot.ch/2011/06/environments-in-r.html?m=1
 
 https://ironholds.org/projects/rbitrary/
+
+
+## I loaded to packages, one overwrites a function of the other
+```{r message=FALSE}
+library('dplyr')
+dat <- read.csv('iris.csv')
+dat_reduced = dat %>% 
+  mutate(Sepal.Length.squared=sqrt(Sepal.Length)) %>% 
+  select(Sepal.Length.squared, Species)
+
+head(dat_reduced)
+```
+
+## part 2: I loaded to packages, one overwrites a function of the other
+```{r message=FALSE}
+library('dplyr')
+library('data.table')
+dat <- fread('iris.csv')
+dat_reduced <- dat %>% 
+  mutate(Sepal.Length.squared=sqrt(Sepal.Length)) %>% 
+  select(Sepal.Length.squared, Species)
+```
+
+
+
+## What's happening inside of this function?
+R is open source => You can look inside of functions!
+Nice if you want to use code and adapt it, or just understand what's happening. 
+Always possible to see the source code. 
+TODO: Check how to get the source code outside of terminal
+
+## But lazyness rests deep inside
+TODO: Add meme for lazyness
+Too lazy to leave the R console. 
+
+## What's happening inside of this function?
+It is simple: Just type the functions name into the R console
+```{r}
+rownames
+```
+
+## Easy
+TODO: Insert gif of thumbs up computer kid
+
+## But wait
+Does not work in a lot of cases. 
+You have to know at least 5 more methods for seing the code of functions.
+```{r}
+mean
+any
+lapply
+```
+TODO: Check S4 methods
+TODO: What is Primitive vs INternal 
+## Wat
+TODO: Insert WAT meme
+
+## View functions code (advanced)
+```{r}
+mean.default
+```
+When package not loaded: Type ::
+Hidden function: Type :::
+S3: methods(x) mean.length
+S4: @
+For C or Fortran functions:  Good luck
+
